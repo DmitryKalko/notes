@@ -16,7 +16,7 @@ const createWindow = () => {
     height: 600,
     minWidth: 300,
     minHeight: 400,
-    // frame: false, 
+    //frame: false, 
     
     //icon:_dirname + "/icon.ico",
     // webPreferences: {

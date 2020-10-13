@@ -1,3 +1,33 @@
+*{
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
 body{
-    background-color: red;
+    display: flex;
+}
+.left-menu{
+    height: 100vh;
+    width: 40px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border-right: lightsteelblue solid 1px;
+}
+.main-block{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    height: 100vh;
+    width: 100vw;
+    background: rgb(218,218,218);
+    background: linear-gradient(0deg, rgba(218,218,218,1) 0%, rgba(8,61,105,1) 100%);
+}
+.main-block_title{
+    height: 60px;
+    border-bottom: lightsteelblue solid 1px;
+}
+.work-zone{
+    height: 100vh;
 }
