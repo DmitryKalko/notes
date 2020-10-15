@@ -12,11 +12,11 @@ let mainWindow;
 const createWindow = () => {
   // Create the browser window.
   mainWindow = new BrowserWindow({
-    width: 800,
-    height: 600,
+    width: 300,
+    height: 400,
     minWidth: 300,
     minHeight: 400,
-    //frame: false, 
+    frame: false, 
     
     //icon:_dirname + "/icon.ico",
     // webPreferences: {
