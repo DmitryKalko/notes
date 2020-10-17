@@ -18,18 +18,49 @@ body{
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    border-right: lightsteelblue solid 1px;
+    /* border-right: lightsteelblue solid 1px; */
+    background: rgb(96,126,152);
+    background: linear-gradient(0deg, rgb(99, 127, 152) 0%, rgba(8,61,105,1) 70%);
     -webkit-app-region : no-drag;
 }
-.icon-paint-format{
+.icon-cross{
+    position: absolute;
+    top: 5px;
+    color: white;
+    opacity: 0.4;
+}
+.icon-cross:hover{
+    opacity: 1;
+}
+.red{
+    color: white;
+}
+.red:hover{
     color: red;
+}
+.yellow{
+    color: white;
+    margin: 20px 0 20px 0;
+}
+.yellow:hover{
+    color: yellow;
+}
+.green{
+    color: white;
+}
+.green:hover{
+    color: green;
 }
 .icon-plus{
-    color: red;
+    position: absolute;
+    bottom: 5px;
+    color: white;
+    opacity: 0.4;
 }
-.icon-cross{
-    color: red;
+.icon-plus:hover{
+    opacity: 1;
 }
+
 .main-block{
     display: flex;
     flex-direction: column;

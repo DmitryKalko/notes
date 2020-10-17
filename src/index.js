@@ -19,9 +19,9 @@ const createWindow = () => {
     frame: false, 
     
     //icon:_dirname + "/icon.ico",
-    // webPreferences: {
-    //   nodeIntegration: false,
-    // },
+    webPreferences: {
+      nodeIntegration: false,
+    },
   });
 
   // and load the index.html of the app.
