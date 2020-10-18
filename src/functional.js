@@ -1,5 +1,8 @@
-const addWindow = document.querySelector('.icon-plus');
+//import { ipcRenderer } from 'electron';
+const {ipcRenderer} = require('electron')
 
+const addWindow = document.querySelector('.icon-plus');
+const closeWindow = document.querySelector('.icon-cross');
 const mainBlock = document.querySelector('.main-block');
 const leftMenu = document.querySelector('.left-menu');
 
@@ -12,33 +15,17 @@ document.onmouseover = function(e) {
     leftMenu.style.display='none';
   };
 
+  addWindow.onclick = creatingNewWindow;
 
-//   let newWindow;
-//   addWindow.onclick = function createWindow(){
-//         newWindow = new BrowserWindow({
-//       width: 300,
-//       height: 400,
-//       minWidth: 300,
-//       minHeight: 400,
-//       frame: false, 
-//     });
-//   };
+  function creatingNewWindow() {
+      ipcRenderer.send('open');
+  }
+
+closeWindow.onclick = closingWindow;
+function closingWindow() {
+    alert('loser')
+    ipcRenderer.send('close');
+}
+
+//const addForm = document.createElement('form')
   
-// newWindow.loadURL(`file://${__dirname}/index.html`);
-
-
-// addWindow.onclick = createNewWindow;
-   
-    
-
-// function createNewWindow () {
-//     //   let newWindow = window.open('', 'modal');
-//     // newWindow.loadURL(`file://${__dirname}/index.html`);
-//     //alert('хуйло')
-//     //window.open(`file://${__dirname}/index.html`, '_blank', 'nodeIntegration=no')
-//  const win = new BrowserWindow({ width: 800, height: 600 })
-//  win.loadURL(`file://${__dirname}/app/index.html`)
-// }
-
-
-
