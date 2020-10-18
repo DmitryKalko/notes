@@ -32,6 +32,7 @@ function closingWindow() {
     remote.getCurrentWindow().close();
 }
 
+//--- разметка формы добавления задач ---
 const addForm = document.createElement('form');
 addForm.classList.add('addForm');
 mainBlockInputField.append(addForm);
@@ -53,8 +54,11 @@ function submitForm(e) {
     }
 
     tasks.push(task);
+    addForm.reset();
+	renderApp();
 }
 
+//--- внешний вид и функционал задачи ---
 function createTasksBlock(task, index) {
     const newTask = document.createElement('li');
     newTask.classList.add('newtTask');
@@ -62,10 +66,12 @@ function createTasksBlock(task, index) {
     taskText.classList.add('taskText');
     const doneTask = document.createElement('button');
     doneTask.classList.add('doneTask');
+
     //doneTask.onclick = 
 
     const deleteTask = document.createElement('button');
     deleteTask.classList.add('deleteTask');
+
     deleteTask.onclick = function() {
 		tasks.splice(index, 1);
 		renderApp();
@@ -76,12 +82,13 @@ function createTasksBlock(task, index) {
 
     return newTask;
 }
-  
+
+//--- перерисовка списка задач ---  
 function renderApp() {
-	ul.innerHTML = '';
+	todoList.innerHTML = '';
 
 	for (let i = 0; i < tasks.length; i++) {
-		let block = createPetsBlock(tasks[i], i);
-		ul.append(block);
-	}
+		let tasksBlock = createTasksBlock(tasks[i], i);
+		todoList.append(tasksBlock);
+    }
 }
