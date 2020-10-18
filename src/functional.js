@@ -1,11 +1,11 @@
-import { remote } from 'electron';
-
-import { ipcRenderer } from 'electron';
+import { remote, ipcRenderer } from 'electron';
 
 const addWindow = document.querySelector('.icon-plus');
 const closeWindow = document.querySelector('.icon-cross');
-const mainBlock = document.querySelector('.main-block');
+//const mainBlock = document.querySelector('.main-block');
 const leftMenu = document.querySelector('.left-menu');
+const mainBlockInputField = document.querySelector('.main-block_input-field');
+const workZone = document.querySelector('.work-zone');
 
 
 document.onmouseover = function(e) {
@@ -30,5 +30,12 @@ function closingWindow() {
     remote.getCurrentWindow().close();
 }
 
-//const addForm = document.createElement('form')
+const addForm = document.createElement('form');
+addForm.classList.add('addForm');
+mainBlockInputField.append(addForm);
+const formInput = document.createElement('input');
+formInput.classList.add('formInput');
+formInput.setAttribute('placeholder','добавить задачу');
+formInput.setAttribute('type','text');
+addForm.append(formInput);
   

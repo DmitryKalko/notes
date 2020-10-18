@@ -52,22 +52,28 @@ body{
 }
 .red{
     color: white;
+    opacity: 0.4;
 }
 .red:hover{
     color: red;
+    opacity: 1;
 }
 .yellow{
     color: white;
     margin: 20px 0 20px 0;
+    opacity: 0.4;
 }
 .yellow:hover{
     color: yellow;
+    opacity: 1;
 }
 .green{
     color: white;
+    opacity: 0.4;
 }
 .green:hover{
     color: green;
+    opacity: 1;
 }
 .icon-plus{
     position: absolute;
@@ -91,7 +97,7 @@ body{
 .main-block_title{
     height: 60px;
     text-align: center;
-    color: white;
+    color: rgb(208, 208, 208);
     font-size: 20px;
     border: none;
     background-color: transparent;
@@ -101,4 +107,16 @@ body{
 }
 .work-zone{
     height: 100vh;
+}
+.formInput{
+    height: 40px;
+    width: 100vw;
+    text-align: center;
+    color: rgb(208, 208, 208);
+    font-size: 15px;
+    border: none;
+    background: rgba(96,126,152,0.3);
+}
+.formInput:focus {
+    outline: none;
 }
