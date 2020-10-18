@@ -65,6 +65,3 @@ app.on('activate', () => {
 
 
 ipcMain.on('open', createWindow);
-ipcMain.on('close', function() {
-  mainWindow = null;
-});

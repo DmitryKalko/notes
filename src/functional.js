@@ -1,5 +1,6 @@
-//import { ipcRenderer } from 'electron';
-const {ipcRenderer} = require('electron')
+import { remote } from 'electron';
+
+import { ipcRenderer } from 'electron';
 
 const addWindow = document.querySelector('.icon-plus');
 const closeWindow = document.querySelector('.icon-cross');
@@ -23,8 +24,9 @@ document.onmouseover = function(e) {
 
 closeWindow.onclick = closingWindow;
 function closingWindow() {
-    alert('loser')
-    ipcRenderer.send('close');
+    alert('Вы уверены, что хотите закрыть это окно?');
+    //сюда вставить sweet alert с вопросом
+    remote.getCurrentWindow().close();
 }
 
 //const addForm = document.createElement('form')
