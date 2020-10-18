@@ -14,14 +14,32 @@ body{
 .left-menu{
     height: 100vh;
     width: 40px;
-    display: none;
+    display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    /* border-right: lightsteelblue solid 1px; */
     background: rgb(96,126,152);
     background: linear-gradient(0deg, rgb(99, 127, 152) 0%, rgba(8,61,105,1) 70%);
     -webkit-app-region : no-drag;
+    position: fixed;
+    left: 0;
+    transform: translateX(-40px);
+    transition: transform 0.3s ease-in-out;
+}
+.left-menu-on{
+    height: 100vh;
+    width: 40px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background: rgb(96,126,152);
+    background: linear-gradient(0deg, rgb(99, 127, 152) 0%, rgba(8,61,105,1) 70%);
+    -webkit-app-region : no-drag;
+    position: fixed;
+    left: 0;
+    transform: translateX(0px);
+    transition: transform 0.3s ease-in-out;
 }
 .icon-cross{
     position: absolute;

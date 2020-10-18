@@ -9,11 +9,12 @@ const leftMenu = document.querySelector('.left-menu');
 
 
 document.onmouseover = function(e) {
-    leftMenu.style.display='flex';
-
+    leftMenu.classList.remove("left-menu");
+    leftMenu.classList.add("left-menu-on");
   };
   document.onmouseout = function(e) {
-    leftMenu.style.display='none';
+    leftMenu.classList.remove("left-menu-on");
+    leftMenu.classList.add("left-menu");
   };
 
   addWindow.onclick = creatingNewWindow;
