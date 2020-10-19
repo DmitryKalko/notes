@@ -72,7 +72,7 @@ body{
     opacity: 0.4;
 }
 .green:hover{
-    color: green;
+    color: rgb(8, 230, 8);
     opacity: 1;
 }
 .icon-plus{
@@ -118,5 +118,43 @@ body{
     background: rgba(96,126,152,0.3);
 }
 .formInput:focus {
+    outline: none;
+}
+.newTask{
+    display: flex;
+    justify-content: space-between;
+    width: 100vw;
+    padding: 5px 10px 5px 50px;
+}
+.full-space{
+    display: flex;
+    justify-content: space-between;
+    width: 100vw;
+    padding: 5px 10px 5px 10px;
+}
+
+.newTask:hover{
+    background: rgba(96,126,152,0.6);
+}
+.taskText{
+    text-align: left;
+    display: flex;
+    align-items: center;
+    color: rgb(208, 208, 208);
+    font-size: 18px;
+}
+.icons{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.icon-checkmark, .icon-bin{
+    background-color: transparent;
+    color: rgb(208, 208, 208);
+    font-size: 20px;
+    margin-left: 8px;
+    border: none;
+}
+.icon-checkmark:focus, .icon-bin:focus{
     outline: none;
 }
