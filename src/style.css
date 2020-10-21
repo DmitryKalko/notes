@@ -25,6 +25,7 @@ body{
     left: 0;
     transform: translateX(-40px);
     transition: transform 0.3s ease-in-out;
+    opacity: 0.7;
 }
 .left-menu-on{
     height: 100vh;
@@ -40,6 +41,7 @@ body{
     left: 0;
     transform: translateX(0px);
     transition: transform 0.3s ease-in-out;
+    opacity: 0.7;
 }
 .icon-cross{
     position: absolute;
@@ -124,17 +126,11 @@ body{
     display: flex;
     justify-content: space-between;
     width: 100vw;
-    padding: 5px 10px 5px 50px;
-}
-.full-space{
-    display: flex;
-    justify-content: space-between;
-    width: 100vw;
     padding: 5px 10px 5px 10px;
 }
-
 .newTask:hover{
     background: rgba(96,126,152,0.6);
+    padding: 5px 10px 5px 50px;
 }
 .taskText{
     text-align: left;
@@ -142,6 +138,15 @@ body{
     align-items: center;
     color: rgb(208, 208, 208);
     font-size: 18px;
+}
+.text-done{
+    text-decoration: line-through;
+}
+.task-done{
+    opacity: 0.3;
+}
+.done-icon{
+    color: aqua;
 }
 .icons{
     display: flex;
@@ -158,3 +163,10 @@ body{
 .icon-checkmark:focus, .icon-bin:focus{
     outline: none;
 }
+.icon-bin:hover{
+    color: tomato;
+}
+.icon-checkmark:hover{
+    color: aqua;
+}
+
