@@ -1,4 +1,5 @@
 import { remote, ipcRenderer } from 'electron';
+import Swal from 'sweetalert2';
 
 let tasks = [];
 let activeTask;
@@ -86,7 +87,8 @@ function createTasksBlock(task) {
     icons.classList.add('icons');
     const doneTask = document.createElement('button');
     doneTask.classList.add('icon-checkmark');
-
+    const deleteTask = document.createElement('button');
+    deleteTask.classList.add('icon-bin');
 
     //--- отметить задачу как выполненную ---
     doneTask.onclick = (e) => {
@@ -99,15 +101,16 @@ function createTasksBlock(task) {
         highlightingTask(task);
     }
 
+    // проверка цветовых статусов
     checkColorStatuses(task);
     function checkColorStatuses(task) {
         if (task.redStatus === true) {
             console.log(task.redStatus)
             console.log(task)
             newTask.classList.add('make-red');
-        } else if(task.yellowStatus === true) {
+        } else if (task.yellowStatus === true) {
             newTask.classList.add('make-yellow');
-        } else if(task.greenStatus === true) {
+        } else if (task.greenStatus === true) {
             newTask.classList.add('make-green');
         } else {
             newTask.classList.remove('make-red');
@@ -116,9 +119,10 @@ function createTasksBlock(task) {
         }
     }
 
+    //проверка статуса выполнения
     checkDoneStatus(task);
     function checkDoneStatus(task) {
-        if(task.doneStatus === true) {
+        if (task.doneStatus === true) {
             taskText.classList.add('text-done');
             newTask.classList.add('task-done');
         } else {
@@ -127,15 +131,11 @@ function createTasksBlock(task) {
         }
     }
 
-
     //--- удаление задачи ---
-    const deleteTask = document.createElement('button');
-    deleteTask.classList.add('icon-bin');
     deleteTask.onclick = (e) => {
         e.stopPropagation();
         deleteOneTask(task)
     };
-
 
     taskText.textContent = task.text;
     icons.append(doneTask, deleteTask)
@@ -154,22 +154,14 @@ function renderApp() {
 }
 
 function makeTaskDone(task) {
-  if (task.doneStatus === false) {
-    task.doneStatus = true;
-    //doneTasks.push(task);
-    console.log('done');
-    console.log(tasks);
-  } 
-  else {
-    task.doneStatus = false;
-    console.log('not done');
-    console.log(tasks);
-  }
-  renderApp();
+    if (task.doneStatus === false) {
+        task.doneStatus = true;
+    }
+    else {
+        task.doneStatus = false;
+    }
+    renderApp();
 }
-
-
-
 
 function highlightingTask(task) {   // ДОРАБОТАТЬ!
     activeTask = task.id;
@@ -267,14 +259,25 @@ function highlightingTask(task) {   // ДОРАБОТАТЬ!
     }
 }
 
-
-
-
-
-
 function deleteOneTask(task) {
     let id = task.id;
-    // сюда вставить sweet alert с вопросом
-    tasks = tasks.filter(task => task.id !== id);
-    renderApp();
+    Swal.fire({
+        title: 'Точно удалить задачу?',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Удалить!',
+        cancelButtonText: 'Нет',
+    }).then((result) => {
+        if (result.isConfirmed) {
+            tasks = tasks.filter(task => task.id !== id);
+            renderApp();
+            Swal.fire(
+                'Задача удалена!',
+                '',
+                'success'
+            )
+        }
+    })
 }
+
