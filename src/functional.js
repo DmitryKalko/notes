@@ -36,9 +36,18 @@ function creatingNewWindow() {
 //--- закрытие окна ---
 closeWindow.onclick = closingWindow;
 function closingWindow() {
-    alert('Вы уверены, что хотите закрыть это окно?');
-    //сюда вставить sweet alert с вопросом
-    remote.getCurrentWindow().close();
+    Swal.fire({
+        title: 'Точно закрыть это окно?',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Закрыть',
+        cancelButtonText: 'Нет',
+    }).then((result) => {
+        if (result.isConfirmed) {
+            remote.getCurrentWindow().close();
+        }
+    })
 }
 
 //--- разметка формы добавления задач ---
