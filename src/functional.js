@@ -105,9 +105,14 @@ function createTasksBlock(task) {
             console.log(task.redStatus)
             console.log(task)
             newTask.classList.add('make-red');
-        }
-        else {
+        } else if(task.yellowStatus === true) {
+            newTask.classList.add('make-yellow');
+        } else if(task.greenStatus === true) {
+            newTask.classList.add('make-green');
+        } else {
             newTask.classList.remove('make-red');
+            newTask.classList.remove('make-yellow');
+            newTask.classList.remove('make-green');
         }
     }
 
@@ -165,13 +170,6 @@ function renderApp() {
 
 function highlightingTask(task) {   // ОБНОВИЛ! ДОРАБОТАТЬ!
     activeTask = task.id;
-    // перебрать массив 
-    // и всех у кого статусы с цветом присвоить соответствующие классы. 
-    // это все в createTasksBlock
-
-
-    // здесь только на клик перебирать массив, найти текущий id в массиве(map), присваивать статусы 
-    // здесь перерисовку включить!
 
     console.log(activeTask);
     let newTask = document.getElementById(activeTask.toString());
@@ -190,9 +188,9 @@ function highlightingTask(task) {   // ОБНОВИЛ! ДОРАБОТАТЬ!
 
     function makeTaskRed() {
         tasks = tasks.map(task => {
-            // return task.id === activeTask ? {...task, redStatus:task.redStatus = true} : task
             if (task.id === activeTask) {
                 task.redStatus = true;
+                activeTask = null;
                 return task;
             } else {
                 return task;
@@ -201,22 +199,56 @@ function highlightingTask(task) {   // ОБНОВИЛ! ДОРАБОТАТЬ!
         console.log(tasks)
     }
 
-    yellow.onclick = () => makeTaskYellow();
-    function makeTaskYellow() {
-
+    yellow.onclick = () => {
+        if (task.yellowStatus === false) {
+            makeTaskYellow();
+            renderApp();
+        } else {
+            makeTaskDafault();
+            renderApp();
+        }
     }
-
-    green.onclick = () => makeTaskGreen();
+    function makeTaskYellow() {
+        tasks = tasks.map(task => {
+            if (task.id === activeTask) {
+                task.yellowStatus = true;
+                activeTask = null;
+                return task;
+            } else {
+                return task;
+            }
+        })
+        console.log(tasks)
+    }
+    green.onclick = () => {
+        if (task.greenStatus === false) {
+            makeTaskGreen();
+            renderApp();
+        } else {
+            makeTaskDafault();
+            renderApp();
+        }
+    }
     function makeTaskGreen() {
-
+        tasks = tasks.map(task => {
+            if (task.id === activeTask) {
+                task.greenStatus = true;
+                activeTask = null;
+                return task;
+            } else {
+                return task;
+            }
+        })
+        console.log(tasks)
     }
 
     function makeTaskDafault() {
         tasks = tasks.map(task => {
             if (task.id === activeTask) {
                 task.redStatus = false;
-                task.redStatus = false;
-                task.redStatus = false;
+                task.yellowStatus = false;
+                task.greenStatus = false;
+                activeTask = null;
                 return task;
             } else {
                 return task;
