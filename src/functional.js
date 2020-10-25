@@ -90,8 +90,8 @@ function createTasksBlock(task) {
 
     //--- отметить задачу как выполненную ---
     doneTask.onclick = (e) => {
-        makeTaskDone(task);
         e.stopPropagation();
+        makeTaskDone(task);
     }
 
     //--- активная задача / выделение задачи цветом ---
@@ -99,8 +99,8 @@ function createTasksBlock(task) {
         highlightingTask(task);
     }
 
-    checkStatus(task);
-    function checkStatus(task) {
+    checkColorStatuses(task);
+    function checkColorStatuses(task) {
         if (task.redStatus === true) {
             console.log(task.redStatus)
             console.log(task)
@@ -113,6 +113,17 @@ function createTasksBlock(task) {
             newTask.classList.remove('make-red');
             newTask.classList.remove('make-yellow');
             newTask.classList.remove('make-green');
+        }
+    }
+
+    checkDoneStatus(task);
+    function checkDoneStatus(task) {
+        if(task.doneStatus === true) {
+            taskText.classList.add('text-done');
+            newTask.classList.add('task-done');
+        } else {
+            taskText.classList.remove('text-done');
+            newTask.classList.remove('task-done');
         }
     }
 
@@ -132,7 +143,7 @@ function createTasksBlock(task) {
     return newTask;
 }
 
-//--- перерисовка списка задач ---   ОБНОВИЛ!
+//--- перерисовка списка задач ---
 function renderApp() {
     todoList.innerHTML = '';
     for (let i = 0; i < tasks.length; i++) {
@@ -142,33 +153,25 @@ function renderApp() {
     }
 }
 
-// function makeTaskDone(task){
-//   let id = task.id;
-//   if (task.doneStatus === false) {
-//     task.doneStatus = true;
-//     doneTasks.push(task);
-//          // taskText.classList.add('text-done');
-//         // newTask.classList.add('task-done');
-//         // doneTask.classList.add('done-icon');
-//     console.log('done');
-//     console.log(tasks);
-//   } 
-//   else {
-//     task.doneStatus = false;
-
-//         // taskText.classList.remove('text-done');
-//         // newTask.classList.remove('task-done');
-//         // doneTask.classList.remove('done-icon');
-//     console.log('not done');
-//     console.log(tasks);
-//   }
-//   renderApp();
-// }
+function makeTaskDone(task) {
+  if (task.doneStatus === false) {
+    task.doneStatus = true;
+    //doneTasks.push(task);
+    console.log('done');
+    console.log(tasks);
+  } 
+  else {
+    task.doneStatus = false;
+    console.log('not done');
+    console.log(tasks);
+  }
+  renderApp();
+}
 
 
 
 
-function highlightingTask(task) {   // ОБНОВИЛ! ДОРАБОТАТЬ!
+function highlightingTask(task) {   // ДОРАБОТАТЬ!
     activeTask = task.id;
 
     console.log(activeTask);
