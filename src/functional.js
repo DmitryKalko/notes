@@ -6,6 +6,9 @@ let uniqId = 1;
 const addWindow = document.querySelector('.icon-plus');
 const closeWindow = document.querySelector('.icon-cross');
 const leftMenu = document.querySelector('.left-menu');
+const red = document.querySelector('.red');
+const yellow = document.querySelector('.yellow');
+const green = document.querySelector('.green');
 const mainBlockInputField = document.querySelector('.main-block_input-field');
 const todoList = document.querySelector('.todo-list');
 
@@ -33,7 +36,7 @@ function creatingNewWindow() {
 closeWindow.onclick = closingWindow;
 function closingWindow() {
     alert('Вы уверены, что хотите закрыть это окно?');
-    //TODO: сюда вставить sweet alert с вопросом
+    //сюда вставить sweet alert с вопросом
     remote.getCurrentWindow().close();
 }
 
@@ -62,18 +65,21 @@ function submitForm(e) {
         yellowStatus: false,
         greenStatus: false,
     }
+
     task.id = uniqId
     uniqId++;
     tasks.push(task);
     addForm.reset();
     renderApp();
     console.log(tasks);
+    console.log(activeTask);
 }
 
 //--- ВНЕШНИЙ ВИД И ФУНКЦИОНАЛ ЗАДАЧИ ---
 function createTasksBlock(task) {
     const newTask = document.createElement('li');
     newTask.classList.add('newTask');
+    newTask.id = task.id.toString();
     const taskText = document.createElement('span');
     taskText.classList.add('taskText');
     const icons = document.createElement('div');
@@ -83,39 +89,36 @@ function createTasksBlock(task) {
 
 
     //--- отметить задачу как выполненную ---
-    doneTask.onclick = function (e) {
+    doneTask.onclick = (e) => {
+        makeTaskDone(task);
         e.stopPropagation();
-        let id = task.id;
-        if (task.doneStatus === false) {
-            task.doneStatus = true;
-
-            taskText.classList.add('text-done');
-            newTask.classList.add('task-done');
-            doneTask.classList.add('done-icon');
-
-            console.log('done');
-            console.log(tasks);
-        }
-        else {
-            task.doneStatus = false;
-
-            taskText.classList.remove('text-done');
-            newTask.classList.remove('task-done');
-            doneTask.classList.remove('done-icon');
-
-            console.log('not done');
-            console.log(tasks);
-        }
-        renderApp();
     }
 
     //--- активная задача / выделение задачи цветом ---
-    newTask.onclick = () => makeTaskActive(task.id, newTask);
+    newTask.onclick = () => {
+        highlightingTask(task);
+    }
+
+    checkStatus(task);
+    function checkStatus(task) {
+        if (task.redStatus === true) {
+            console.log(task.redStatus)
+            console.log(task)
+            newTask.classList.add('make-red');
+        }
+        else {
+            newTask.classList.remove('make-red');
+        }
+    }
+
 
     //--- удаление задачи ---
     const deleteTask = document.createElement('button');
     deleteTask.classList.add('icon-bin');
-    deleteTask.onclick = () => deleteOneTask(task);
+    deleteTask.onclick = (e) => {
+        e.stopPropagation();
+        deleteOneTask(task)
+    };
 
 
     taskText.textContent = task.text;
@@ -124,28 +127,113 @@ function createTasksBlock(task) {
     return newTask;
 }
 
-//--- перерисовка списка задач ---  
+//--- перерисовка списка задач ---   ОБНОВИЛ!
 function renderApp() {
-    //tasks.map(task => task.id++)
     todoList.innerHTML = '';
-
     for (let i = 0; i < tasks.length; i++) {
-        let tasksBlock = createTasksBlock(tasks[i], i);
-        todoList.append(tasksBlock);
+        let tasksList = createTasksBlock(tasks[i]);
+        todoList.append(tasksList);
+        console.log('Render отработал')
     }
 }
 
-function makeTaskActive(id, newTask) {
-    activeTask = id;
-    newTask.style.background = 'green';
+// function makeTaskDone(task){
+//   let id = task.id;
+//   if (task.doneStatus === false) {
+//     task.doneStatus = true;
+//     doneTasks.push(task);
+//          // taskText.classList.add('text-done');
+//         // newTask.classList.add('task-done');
+//         // doneTask.classList.add('done-icon');
+//     console.log('done');
+//     console.log(tasks);
+//   } 
+//   else {
+//     task.doneStatus = false;
+
+//         // taskText.classList.remove('text-done');
+//         // newTask.classList.remove('task-done');
+//         // doneTask.classList.remove('done-icon');
+//     console.log('not done');
+//     console.log(tasks);
+//   }
+//   renderApp();
+// }
+
+
+
+
+function highlightingTask(task) {   // ОБНОВИЛ! ДОРАБОТАТЬ!
+    activeTask = task.id;
+    // перебрать массив 
+    // и всех у кого статусы с цветом присвоить соответствующие классы. 
+    // это все в createTasksBlock
+
+
+    // здесь только на клик перебирать массив, найти текущий id в массиве(map), присваивать статусы 
+    // здесь перерисовку включить!
+
     console.log(activeTask);
+    let newTask = document.getElementById(activeTask.toString());
+    newTask.classList.toggle('active');
+    console.log(newTask);
 
+    red.onclick = () => {
+        if (task.redStatus === false) {
+            makeTaskRed();
+            renderApp();
+        } else {
+            makeTaskDafault();
+            renderApp();
+        }
+    }
 
+    function makeTaskRed() {
+        tasks = tasks.map(task => {
+            // return task.id === activeTask ? {...task, redStatus:task.redStatus = true} : task
+            if (task.id === activeTask) {
+                task.redStatus = true;
+                return task;
+            } else {
+                return task;
+            }
+        })
+        console.log(tasks)
+    }
+
+    yellow.onclick = () => makeTaskYellow();
+    function makeTaskYellow() {
+
+    }
+
+    green.onclick = () => makeTaskGreen();
+    function makeTaskGreen() {
+
+    }
+
+    function makeTaskDafault() {
+        tasks = tasks.map(task => {
+            if (task.id === activeTask) {
+                task.redStatus = false;
+                task.redStatus = false;
+                task.redStatus = false;
+                return task;
+            } else {
+                return task;
+            }
+        })
+        console.log(tasks)
+    }
 }
+
+
+
+
+
 
 function deleteOneTask(task) {
     let id = task.id;
+    // сюда вставить sweet alert с вопросом
     tasks = tasks.filter(task => task.id !== id);
     renderApp();
 }
-

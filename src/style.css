@@ -170,3 +170,15 @@ body{
     color: aqua;
 }
 
+.active{
+    background: rgba(96,126,152,0.6);
+}
+.make-red{
+    background: rgba(236, 123, 103, 0.7);
+}
+.make-yellow{
+    background: rgba(246, 246, 72, 0.7);
+}
+.make-green{
+    background: rgba(153, 255, 153, 0.7);
+}
