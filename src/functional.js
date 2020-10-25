@@ -190,6 +190,8 @@ function highlightingTask(task) {   // ОБНОВИЛ! ДОРАБОТАТЬ!
         tasks = tasks.map(task => {
             if (task.id === activeTask) {
                 task.redStatus = true;
+                task.yellowStatus = false;
+                task.greenStatus = false;
                 activeTask = null;
                 return task;
             } else {
@@ -212,6 +214,8 @@ function highlightingTask(task) {   // ОБНОВИЛ! ДОРАБОТАТЬ!
         tasks = tasks.map(task => {
             if (task.id === activeTask) {
                 task.yellowStatus = true;
+                task.redStatus = false;
+                task.greenStatus = false;
                 activeTask = null;
                 return task;
             } else {
@@ -233,6 +237,8 @@ function highlightingTask(task) {   // ОБНОВИЛ! ДОРАБОТАТЬ!
         tasks = tasks.map(task => {
             if (task.id === activeTask) {
                 task.greenStatus = true;
+                task.redStatus = false;
+                task.yellowStatus = false;
                 activeTask = null;
                 return task;
             } else {
