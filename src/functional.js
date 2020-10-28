@@ -50,6 +50,18 @@ function closingWindow() {
   })
 }
 
+ // --- перетаскивание задачи ---
+ todoList.ondragover = allowDrop;
+ function allowDrop(e) {
+   e.preventDefault();
+ }
+ todoList.ondrop = drop;
+ function drop(e) {
+   let taskId = e.dataTransfer.getData('id');
+   console.log(taskId)
+   e.target.append(document.getElementById(taskId))
+ }
+
 //--- разметка формы добавления задач ---
 const addForm = document.createElement('form');
 addForm.classList.add('addForm');
@@ -95,6 +107,10 @@ function submitForm(e) {
 function createTasksBlock(task) {
   const newTask = document.createElement('li');
   newTask.classList.add('newTask');
+
+  newTask.id = task.id.toString();
+  
+  newTask.setAttribute('draggable', 'true');
   const taskText = document.createElement('span');
   taskText.classList.add('taskText');
   const icons = document.createElement('div');
@@ -116,7 +132,7 @@ function createTasksBlock(task) {
     highlightingTask(task);
   }
     
-  //проверка статуса активности      
+  // --- проверка статуса активности ---     
   checkActiveStatus(task);
   function checkActiveStatus(task) {
     if (task.activeStatus === true) {
@@ -126,7 +142,7 @@ function createTasksBlock(task) {
     }
   }
 
-  // проверка цветовых статусов
+  // --- проверка цветовых статусов ---
   checkColorStatuses(task);
   function checkColorStatuses(task) {
     if (task.redStatus === true) {
@@ -142,7 +158,7 @@ function createTasksBlock(task) {
     }
   }
 
-  //проверка статуса выполнения
+  // --- проверка статуса выполнения ---
   checkDoneStatus(task);
   function checkDoneStatus(task) {
     if (task.doneStatus === true) {
@@ -159,6 +175,11 @@ function createTasksBlock(task) {
     e.stopPropagation();
     deleteOneTask(task)
   };
+  // --- перетаскивание задачи ---
+  newTask.ondragstart = drag;
+  function drag(e) {
+    e.dataTransfer.setData('id', task.id);
+  }
 
   taskText.textContent = task.text;
   icons.append(doneTask, deleteTask)
@@ -187,7 +208,7 @@ function makeTaskDone(task) {
   renderApp();
 }
 
-function makeTaskActive(task) {      
+function makeTaskActive(task) {       
   activeTask = task.id;
   console.log(activeTask)
 
@@ -207,7 +228,7 @@ function makeTaskActive(task) {
   renderApp();
 }
 
-function highlightingTask(task) {  
+function highlightingTask(task) {   
 
   console.log(task)
   red.onclick = () => {

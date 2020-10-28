@@ -107,7 +107,7 @@ body{
 .main-block_title:focus {
     outline: none;
 }
-.work-zone{
+.todo-list{
     height: 100vh;
 }
 .formInput{
