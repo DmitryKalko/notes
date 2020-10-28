@@ -173,8 +173,15 @@ function createTasksBlock(task) {
   //--- удаление задачи ---
   deleteTask.onclick = (e) => {
     e.stopPropagation();
-    deleteOneTask(task)
+    deleteOneTask(task);
   };
+
+  // --- редактирование задачи ---
+  taskText.onclick = (e) => {
+    e.stopPropagation();
+    taskText.style.opacity = 0.1;
+    editThisTask(task);
+  }
   // --- перетаскивание задачи ---
   newTask.ondragstart = drag;
   function drag(e) {
@@ -339,5 +346,10 @@ function deleteOneTask(task) {
       )
     }
   })
+}
+function editThisTask(task) {
+    formInput.value = task.text;
+    let id = task.id;
+    tasks = tasks.filter(task => task.id !== id);
 }
 
