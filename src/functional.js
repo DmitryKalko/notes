@@ -50,17 +50,67 @@ function closingWindow() {
   })
 }
 
+
+
+
  // --- перетаскивание задачи ---
  todoList.ondragover = allowDrop;
  function allowDrop(e) {
    e.preventDefault();
- }
+   const draggingTask = todoList.querySelector(`.selected`);
+   
+   const currentTask = e.target;
+   
+   // Проверяем, что событие сработало:
+   // 1. не на том элементе, который мы перемещаем,
+   // 2. именно на элементе списка
+   const isMoveable = draggingTask !== currentTask &&
+   currentTask.classList.contains('newTask');
+ 
+   // Если нет, прерываем выполнение функции
+   if (!isMoveable) {
+     return;
+   }
+ 
+  const nextTask = getNextElement(e.clientY, currentTask);
+  console.log(nextTask)
+  // Проверяем, нужно ли менять элементы местами
+  if (
+    nextTask && 
+    draggingTask === nextTask.previousElementSibling ||
+    draggingTask === nextTask
+  ) {
+    // Если нет, выходим из функции, чтобы избежать лишних изменений в DOM
+    return;
+  }
+
+  todoList.insertBefore(draggingTask, nextTask);
+};
+
+ const getNextElement = (cursorPosition, currentTask) => {
+    // Получаем объект с размерами и координатами
+    const currentTaskCoord = currentTask.getBoundingClientRect();
+    // Находим вертикальную координату центра текущего элемента
+    const currentTaskCenter = currentTaskCoord.y + currentTaskCoord.height / 2;
+    // Если курсор выше центра элемента, возвращаем текущий элемент
+    // В ином случае — следующий DOM-элемент
+    const nextTask = (cursorPosition < currentTaskCenter) ?
+    currentTask :
+    currentTask.nextElementSibling;
+    console.log(nextTask);
+    return nextTask;
+  };
+
  todoList.ondrop = drop;
  function drop(e) {
-   let taskId = e.dataTransfer.getData('id');
-   console.log(taskId)
-   e.target.append(document.getElementById(taskId))
+   let draggingTask = e.dataTransfer.getData('id');
+   console.log(draggingTask)
+  // e.target.append(document.getElementById(draggingTask))
  }
+
+
+
+
 
 //--- разметка формы добавления задач ---
 const addForm = document.createElement('form');
@@ -111,6 +161,7 @@ function createTasksBlock(task) {
   newTask.id = task.id.toString();
   
   newTask.setAttribute('draggable', 'true');
+
   const taskText = document.createElement('span');
   taskText.classList.add('taskText');
   const icons = document.createElement('div');
@@ -177,16 +228,22 @@ function createTasksBlock(task) {
   };
 
   // --- редактирование задачи ---
-  taskText.onclick = (e) => {
+  newTask.ondblclick = (e) => {
     e.stopPropagation();
     taskText.style.opacity = 0.1;
     editThisTask(task);
   }
+
   // --- перетаскивание задачи ---
-  newTask.ondragstart = drag;
-  function drag(e) {
-    e.dataTransfer.setData('id', task.id);
-  }
+  todoList.addEventListener('dragstart', (e) => {
+    e.target.classList.add('selected');
+    e.dataTransfer.setData('id', e.target.id);
+  })
+  
+  todoList.addEventListener('dragend', (e) => {
+    e.target.classList.remove('selected');
+  });
+
 
   taskText.textContent = task.text;
   icons.append(doneTask, deleteTask)
@@ -352,4 +409,5 @@ function editThisTask(task) {
     let id = task.id;
     tasks = tasks.filter(task => task.id !== id);
 }
+
 

@@ -139,7 +139,6 @@ body{
     align-items: center;
     color: rgb(208, 208, 208);
     font-size: 18px;
-    cursor: text;
 }
 .text-done{
     text-decoration: line-through;
