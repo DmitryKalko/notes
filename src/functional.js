@@ -1,9 +1,12 @@
 import { remote, ipcRenderer } from 'electron';
 import Swal from 'sweetalert2';
 
-let tasks = [];
+
+//достаем данные из хранилища
+let tasks = JSON.parse(window.localStorage.getItem('tasks')) || []; 
+
 let activeTask;
-let uniqId = 1;
+let uniqId = JSON.parse(window.localStorage.getItem('uniqId')) || 1;
 const addWindow = document.querySelector('.icon-plus');
 const closeWindow = document.querySelector('.icon-cross');
 const leftMenu = document.querySelector('.left-menu');
@@ -12,7 +15,9 @@ const yellow = document.querySelector('.yellow');
 const green = document.querySelector('.green');
 const mainBlockInputField = document.querySelector('.main-block_input-field');
 const todoList = document.querySelector('.todo-list');
-
+const title = document.querySelector('.main-block_title');
+title.value = JSON.parse(window.localStorage.getItem('title')) || ''; 
+renderApp();
 
 //--- появление / исчезновение левого меню ---
 document.onmouseover = onmouseOver;
@@ -46,6 +51,8 @@ function closingWindow() {
   }).then((result) => {
     if (result.isConfirmed) {
       remote.getCurrentWindow().close();
+      localStorage.removeItem('tasks');
+      localStorage.removeItem('uniqId');
     }
   })
 }
@@ -85,6 +92,8 @@ function closingWindow() {
   }
 
   todoList.insertBefore(draggingTask, nextTask);
+  draggingTask.id = nextTask.id;
+   console.log(tasks)
 };
 
  const getNextElement = (cursorPosition, currentTask) => {
@@ -105,7 +114,7 @@ function closingWindow() {
  function drop(e) {
    let draggingTask = e.dataTransfer.getData('id');
    console.log(draggingTask)
-  // e.target.append(document.getElementById(draggingTask))
+   // определяем координаты каждой таски и записываем в ключи объекта       ДОРАБОТАТЬ!!!
  }
 
 
@@ -141,6 +150,7 @@ function submitForm(e) {
 
   task.id = uniqId
   uniqId++;
+  window.localStorage.setItem('uniqId', JSON.stringify(uniqId));
   tasks.push(task);
   addForm.reset();
   tasks = tasks.map(task => {
@@ -158,7 +168,7 @@ function createTasksBlock(task) {
   const newTask = document.createElement('li');
   newTask.classList.add('newTask');
 
-  newTask.id = task.id.toString();
+  //newTask.id = task.id.toString();
   
   newTask.setAttribute('draggable', 'true');
 
@@ -253,13 +263,19 @@ function createTasksBlock(task) {
 
 //--- перерисовка списка задач ---
 function renderApp() {
+     // отправляем данные в хранилище
+  window.localStorage.setItem('tasks', JSON.stringify(tasks));
+  window.localStorage.setItem('title', JSON.stringify(title.value));
+  console.log(localStorage)
   todoList.innerHTML = '';
   for (let i = 0; i < tasks.length; i++) {
+      // считываем координаты и устанавливаем такски по их местам           ДОРАБОТАТЬ!!!
     let tasksList = createTasksBlock(tasks[i]);
     todoList.append(tasksList);
     console.log('Render отработал')
   }
   activeTask = null;
+
 }
 
 function makeTaskDone(task) {      
@@ -408,6 +424,7 @@ function editThisTask(task) {
     formInput.value = task.text;
     let id = task.id;
     tasks = tasks.filter(task => task.id !== id);
+    renderApp();
 }
 
 
