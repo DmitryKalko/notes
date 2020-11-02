@@ -110,7 +110,13 @@ body{
 }
 .todo-list{
     height: 100vh;
+    overflow: scroll;
+    overflow-x: hidden;
 }
+::-webkit-scrollbar {
+    width: 0px;
+    background: transparent;
+  }
 .formInput{
     height: 40px;
     width: 100vw;

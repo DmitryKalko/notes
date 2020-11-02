@@ -53,6 +53,7 @@ function closingWindow() {
       remote.getCurrentWindow().close();
       localStorage.removeItem('tasks');
       localStorage.removeItem('uniqId');
+      localStorage.removeItem('title');
     }
   })
 }
