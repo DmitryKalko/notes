@@ -25,6 +25,12 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
+.icon-moon-fill:before {
+  content: "\e901";
+}
+.icon-cog:before {
+  content: "\e900";
+}
 .icon-paint-format:before {
   content: "\e90c";
 }
@@ -34,8 +40,14 @@
 .icon-cross:before {
   content: "\ea0f";
 }
+.icon-fire:before {
+  content: "\e9a9";
+}
 .icon-bin:before {
   content: "\e9ac";
+}
+.icon-briefcase:before {
+  content: "\e9ae";
 }
 .icon-checkmark:before {
   content: "\ea10";

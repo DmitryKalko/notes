@@ -76,14 +76,17 @@ body{
     color: rgb(8, 230, 8);
     opacity: 1;
 }
-.icon-plus{
+.icon-cog{
     position: absolute;
     bottom: 5px;
+    font-size: 24px;
     color: white;
     opacity: 0.4;
 }
-.icon-plus:hover{
+.icon-cog:hover{
     opacity: 1;
+    transform: rotate(60deg);
+    transition-duration: 0.5s;
 }
 
 .main-block{
