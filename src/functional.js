@@ -1,4 +1,4 @@
-import { remote, ipcRenderer } from 'electron';
+import { remote } from 'electron';
 import Swal from 'sweetalert2';
 
 
@@ -31,23 +31,21 @@ function mouseOut(e) {
     leftMenu.classList.add('left-menu');
 };
 
-
-//--- открытие нового окна ---
-addWindow.onclick = creatingNewWindow;
-function creatingNewWindow() {
-    ipcRenderer.send('open');
-}
-
 //--- закрытие окна ---
 closeWindow.onclick = closingWindow;
 function closingWindow() {
     Swal.fire({
-        title: 'Точно закрыть это окно?',
+        title: 'Закрыть это окно?',
         showCancelButton: true,
-        confirmButtonColor: '#3085d6',
-        cancelButtonColor: '#d33',
         confirmButtonText: 'Закрыть',
         cancelButtonText: 'Нет',
+        customClass: {
+            popup: 'my-popup',
+            header: 'my-header',
+            title: 'my-title',
+            confirmButton: 'my-confirm-button',
+            cancelButton: 'my-cancel-button',
+          }
     }).then((result) => {
         if (result.isConfirmed) {
             remote.getCurrentWindow().close();
@@ -59,29 +57,23 @@ function closingWindow() {
     })
 }
 
-
-
-
 // --- перетаскивание задачи ---
 todoList.ondragover = allowDrop;
 function allowDrop(e) {
     e.preventDefault();
     const draggingTask = todoList.querySelector(`.selected`);
     const currentTask = e.target;
-
     // Проверяем, что событие сработало:
     // 1. не на том элементе, который мы перемещаем,
     // 2. именно на элементе списка
     const isMoveable = draggingTask !== currentTask &&
         currentTask.classList.contains('newTask');
-
     // Если нет, прерываем выполнение функции
     if (!isMoveable) {
         return;
     }
-
     const nextTask = getNextElement(e.clientY, currentTask);
-    console.log(nextTask)
+    //console.log(nextTask)
     // Проверяем, нужно ли менять элементы местами
     if (
         nextTask &&
@@ -91,9 +83,8 @@ function allowDrop(e) {
         // Если нет, выходим из функции, чтобы избежать лишних изменений в DOM
         return;
     }
-
     todoList.insertBefore(draggingTask, nextTask);
-    console.log(tasks)
+    //console.log(tasks)
 };
 let nextTaskindex;
 const getNextElement = (cursorPosition, currentTask) => {
@@ -106,76 +97,38 @@ const getNextElement = (cursorPosition, currentTask) => {
     const nextTask = (cursorPosition < currentTaskCenter) ?
         currentTask :
         currentTask.nextElementSibling;
-    console.log(nextTask);
+    //console.log(nextTask);
     if (nextTask !== null) {
-        //console.log('нет следующей таски');              ДОРАБОТАТЬ ЧТО БЫ МОЖНО БЫЛО ВСТАВЛЯТЬ НА ПОСЛЕДНЕЕ МЕСТО
         for (let i = 0; i < tasks.length; i++) {
             if (tasks[i].id == nextTask.id) {
                 nextTaskindex = tasks.indexOf(tasks[i]);
             }
         }
     }
-
-    console.log(nextTaskindex);
+    else {
+        nextTaskindex = tasks.length + 1;
+    }
+    //console.log(nextTaskindex);
     return nextTask;
 };
 
-
-
-// function setCoords() {
-//       let tasksCollection = document.querySelectorAll('.newTask');
-//    console.log(Array.from(tasksCollection));
-//   let coords = [];
-//   Array.from(tasksCollection).map(task => {
-//        let taskCoord = task.getBoundingClientRect();
-//        let taskCoordObject = {
-//            id: task.id,
-//            coordX: taskCoord.x,
-//            coordY: taskCoord.y,
-//        }
-//        coords.push(taskCoordObject) 
-//    })
-//    console.log(coords);
-//    window.localStorage.setItem('coords', JSON.stringify(coords));
-// }
-
-//let numbersOfElements = [];
-
-// function getPosision() {
-//     let tasksCollection = document.querySelectorAll('.newTask');
-// let tasksArray = Array.from(tasksCollection);
-// for(let i = 0; i < tasksArray.length; i++) {
-//     let numberOfElement = tasksArray.indexOf(tasksArray[i]) + 1;
-//     let positionObject = {
-//         id: tasksArray[i].id,
-//         position: numberOfElement,
-//     }
-//     numbersOfElements.push(positionObject);
-// }
-// window.localStorage.setItem('numbersOfElements', JSON.stringify(numbersOfElements));
-// console.log(numbersOfElements);
-// }
-console.log(tasks);
 todoList.ondrop = drop;
 function drop(e) {
-    //setCoords();
-    //getPosision();
-
     let draggingTaskIndex;
     const draggingTask = todoList.querySelector(`.selected`);
-    console.log(draggingTask.id);
+    //console.log(draggingTask.id);
     for (let i = 0; i < tasks.length; i++) {
         if (tasks[i].id == draggingTask.id) {
             draggingTaskIndex = tasks.indexOf(tasks[i]);
         }
     }
     let moovingTask = tasks[draggingTaskIndex];
-    console.log(moovingTask);
-    console.log(draggingTaskIndex);
+    //console.log(moovingTask);
+    //console.log(draggingTaskIndex);
     tasks.splice(draggingTaskIndex, 1);
-    console.log(tasks);
+    //console.log(tasks);
     tasks.splice(nextTaskindex - 1, 0, moovingTask)
-    console.log(tasks);
+   // console.log(tasks);
     window.localStorage.setItem('tasks', JSON.stringify(tasks));
     renderApp();
 }
@@ -209,7 +162,6 @@ function submitForm(e) {
     task.id = uniqId
     uniqId++;
     window.localStorage.setItem('uniqId', JSON.stringify(uniqId));
-    //tasks.push(task);
     tasks.unshift(task);
     addForm.reset();
     tasks = tasks.map(task => {
@@ -218,8 +170,6 @@ function submitForm(e) {
     })
 
     renderApp();
-    console.log(tasks);
-    console.log(activeTask);
 }
 
 //--- ВНЕШНИЙ ВИД И ФУНКЦИОНАЛ ЗАДАЧИ ---
@@ -310,7 +260,6 @@ function createTasksBlock(task) {
         e.target.classList.remove('selected');
     });
 
-
     taskText.textContent = task.text;
     icons.append(doneTask, deleteTask)
     newTask.append(taskText, icons);
@@ -322,32 +271,12 @@ function renderApp() {
     // отправляем данные в хранилище
     window.localStorage.setItem('tasks', JSON.stringify(tasks));
     window.localStorage.setItem('title', JSON.stringify(title.value));
-
-
-    console.log(localStorage)
+    //console.log(localStorage)
     todoList.innerHTML = '';
     for (let i = 0; i < tasks.length; i++) {
         let tasksList = createTasksBlock(tasks[i]);
         todoList.append(tasksList);
-        console.log('Render отработал')
     }
-    //   let coords = JSON.parse(window.localStorage.getItem('coords')) || []; 
-    //   console.log(coords);
-
-    //   let tasksCollection = document.querySelectorAll('.newTask');
-    //   let tasksMarkup = Array.from(tasksCollection);
-    //   console.log(tasksMarkup);
-
-    //   for (let i = 0; i < coords.length; i++) {
-    //       for(let a = 0; a < tasksMarkup.length; a++) {
-    //           if(coords[i].id == tasksMarkup[a].id) {
-    //               tasksMarkup[a].style.position = 'absolute';
-    //               tasksMarkup[a].style.top = coords[i].coordY + 'px';
-    //           }
-    //       }
-    //   }
-
-
     activeTask = null;
 }
 
@@ -363,7 +292,6 @@ function makeTaskDone(task) {
 
 function makeTaskActive(task) {
     activeTask = task.id;
-    console.log(activeTask)
 
     if (task.activeStatus === false) {
         task.activeStatus = true;
@@ -377,13 +305,11 @@ function makeTaskActive(task) {
     } else {
         task.activeStatus = false;
     }
-    console.log(tasks);
     renderApp();
 }
 
 function highlightingTask(task) {
 
-    console.log(task)
     red.onclick = () => {
         if (task.redStatus === false) {
             makeTaskRed();
@@ -406,7 +332,6 @@ function highlightingTask(task) {
                 return task;
             }
         })
-        console.log(tasks)
     }
 
     yellow.onclick = () => {
@@ -430,7 +355,6 @@ function highlightingTask(task) {
                 return task;
             }
         })
-        console.log(tasks)
     }
     green.onclick = () => {
         if (task.greenStatus === false) {
@@ -453,7 +377,6 @@ function highlightingTask(task) {
                 return task;
             }
         })
-        console.log(tasks)
     }
 
     function makeTaskDafault() {
@@ -468,28 +391,39 @@ function highlightingTask(task) {
                 return task;
             }
         })
-        console.log(tasks)
     }
 }
 
 function deleteOneTask(task) {
     let id = task.id;
     Swal.fire({
-        title: 'Точно удалить задачу?',
+        title: 'Удалить задачу?',
         showCancelButton: true,
-        confirmButtonColor: '#3085d6',
-        cancelButtonColor: '#d33',
         confirmButtonText: 'Удалить!',
         cancelButtonText: 'Нет',
+        customClass: {
+            popup: 'my-popup',
+            header: 'my-header',
+            title: 'my-title',
+            confirmButton: 'my-confirm-button',
+            cancelButton: 'my-cancel-button',
+          }
     }).then((result) => {
         if (result.isConfirmed) {
             tasks = tasks.filter(task => task.id !== id);
             renderApp();
-            Swal.fire(
-                'Задача удалена!',
-                '',
-                'success'
-            )
+            Swal.fire({
+                position: 'center',
+                icon: 'success',
+                title: 'Задача удалена!',
+                showConfirmButton: false,
+                timer: 1200,
+                customClass: {
+                    popup: 'my-popup-result',
+                    title: 'my-title',
+                    header: 'my-header',
+                  }
+              })
         }
     })
 }
@@ -499,5 +433,3 @@ function editThisTask(task) {
     tasks = tasks.filter(task => task.id !== id);
     renderApp();
 }
-
-

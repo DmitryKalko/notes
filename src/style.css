@@ -24,7 +24,7 @@ body{
     left: 0;
     transform: translateX(-40px);
     transition: transform 0.3s ease-in-out;
-    opacity: 0.7;
+    opacity: 0.9;
 }
 .left-menu-on{
     height: 100vh;
@@ -40,7 +40,7 @@ body{
     left: 0;
     transform: translateX(0px);
     transition: transform 0.3s ease-in-out;
-    opacity: 0.7;
+    opacity: 0.9;
 }
 .icon-cross{
     position: absolute;
@@ -189,4 +189,46 @@ body{
 }
 .make-green{
     background: rgba(117, 193, 117, 0.7);
+}
+
+/* настройка уведомления удаления */
+
+.my-popup{
+    background-color: rgba(31, 35, 39, 0.87)!important;
+    width: 15em!important;
+    padding: .2em!important;
+}
+.my-title{
+    margin: 0.4em 0 0 0!important;
+    color: #fff!important;
+    font-size: 1.3em!important;
+    font-weight: 500!important;
+}
+
+.my-confirm-button{
+    margin: .3125em!important;
+    padding: .325em .3em!important;
+    box-shadow: none!important;
+    font-weight: 300!important;
+    background-color: rgba(89, 89, 89, 0.7)!important;
+    color: #fff!important;
+    font-size: 1.0625em!important;
+}
+.my-confirm-button:hover{
+    background-color: rgba(117, 193, 117, 0.8)!important;
+}
+.my-cancel-button{
+    margin: .3125em!important;
+    padding: .325em .3em!important;
+    box-shadow: none!important;
+    font-weight: 300!important;
+    background-color: rgba(89, 89, 89, 0.7)!important;
+    color: #fff!important;
+    font-size: 1.0625em!important;
+}
+.my-cancel-button:hover{
+    background-color: rgba(236, 123, 103, 0.8)!important;
+}
+.my-popup-result{
+    background:rgba(31, 35, 39, 1)!important;
 }

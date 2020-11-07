@@ -64,4 +64,4 @@ app.on('activate', () => {
 // code. You can also put them in separate files and import them here.
 
 
-ipcMain.on('open', createWindow);
+//ipcMain.on('open', createWindow);
