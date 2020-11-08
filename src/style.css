@@ -116,19 +116,23 @@ body{
     transition: 0.5s ease-in-out;
 }
 
-.icon-briefcase, .icon-moon-fill, .icon-fire{
+.icon-briefcase, .icon-moon-fill, .icon-fire, .icon-droplet{
     opacity: 0.5;
 }
 .briefcase-active{
-    color: rgb(18, 18, 162);
+    color: rgb(16, 16, 215);
     opacity: 1;
 }
 .moon-active{
-    color: rgb(6, 6, 52);
+    color: rgb(205, 205, 46);
     opacity: 1;
 }
 .fire-active{
     color: rgb(228, 64, 13);
+    opacity: 1;
+}
+.water-active{
+    color: rgb(13, 163, 228);
     opacity: 1;
 }
 .icon-briefcase:hover{
@@ -139,6 +143,9 @@ body{
     opacity: 1;
 }
 .icon-fire:hover{
+    opacity: 1;
+}
+.icon-droplet:hover{
     opacity: 1;
 }
 
@@ -156,12 +163,41 @@ body{
     background: rgb(96,126,152);
     background: linear-gradient(0deg, rgb(99, 127, 152) 0%, rgba(8,61,105,1) 100%);
 }
+.night{
+    /* background: rgb(17,20,37);
+    background: linear-gradient(180deg, rgba(17,20,37,1) 10%, rgba(55,81,224,1) 100%); */
+    background-image: url(img/polar.jpg);
+    background-size: cover;
+    -moz-background-cover: cover;
+    -ms-background-cover: cover;
+    -webkit-background-cover: cover;
+}
+/* .main-block i{
+    position: absolute;
+    background: rgba(255, 255, 255, 0.5);
+    border-radius: 50%;
+} */
+.fire{
+    background-image: url(img/sunset.jpg);
+    background-size: cover;
+    -moz-background-cover: cover;
+    -ms-background-cover: cover;
+    -webkit-background-cover: cover;
+}
+.water{
+    background-image: url(img/water.jpg);
+    background-size: cover;
+    -moz-background-cover: cover;
+    -ms-background-cover: cover;
+    -webkit-background-cover: cover;
+}
 .main-block_title{
     cursor: default;
     -webkit-app-region: drag;
     height: 60px;
     text-align: center;
-    color: rgb(208, 208, 208);
+    /* color: rgb(208, 208, 208); */
+    color: white;
     font-size: 20px;
     border: none;
     background-color: transparent;
@@ -182,7 +218,8 @@ body{
     height: 40px;
     width: 100vw;
     text-align: center;
-    color: rgb(208, 208, 208);
+    /* color: rgb(208, 208, 208); */
+    color: white;
     font-size: 15px;
     border: none;
     background: rgba(96,126,152,0.3);
@@ -204,7 +241,7 @@ body{
     text-align: left;
     display: flex;
     align-items: center;
-    color: rgb(208, 208, 208);
+    /* color: rgb(208, 208, 208); */
     font-size: 18px;
 }
 .text-done{
@@ -224,7 +261,8 @@ body{
 }
 .icon-checkmark, .icon-bin{
     background-color: transparent;
-    color: rgb(208, 208, 208);
+    /* color: rgb(208, 208, 208); */
+    color: white;
     font-size: 20px;
     margin-left: 8px;
     border: none;

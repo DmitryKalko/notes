@@ -40,6 +40,9 @@
 .icon-cross:before {
   content: "\ea0f";
 }
+.icon-droplet:before {
+  content: "\e90b";
+}
 .icon-fire:before {
   content: "\e9a9";
 }
