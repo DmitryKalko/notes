@@ -7,9 +7,9 @@ let tasks = JSON.parse(window.localStorage.getItem('tasks')) || [];
 
 let activeTask;
 let uniqId = JSON.parse(window.localStorage.getItem('uniqId')) || 1;
-const addWindow = document.querySelector('.icon-plus');
+//const addWindow = document.querySelector('.icon-plus');
 const closeWindow = document.querySelector('.icon-cross');
-const leftMenu = document.querySelector('.left-menu');
+//const leftMenu = document.querySelector('.left-menu');
 const red = document.querySelector('.red');
 const yellow = document.querySelector('.yellow');
 const green = document.querySelector('.green');
@@ -20,16 +20,16 @@ title.value = JSON.parse(window.localStorage.getItem('title')) || '';
 renderApp();
 
 //--- появление / исчезновение левого меню ---
-document.onmouseover = onmouseOver;
-function onmouseOver(e) {
-    leftMenu.classList.remove('left-menu');
-    leftMenu.classList.add('left-menu-on');
-};
-document.onmouseout = mouseOut;
-function mouseOut(e) {
-    leftMenu.classList.remove('left-menu-on');
-    leftMenu.classList.add('left-menu');
-};
+// document.onmouseover = onmouseOver;
+// function onmouseOver(e) {
+//     leftMenu.classList.remove('left-menu');
+//     leftMenu.classList.add('left-menu-on');
+// };
+// document.onmouseout = mouseOut;
+// function mouseOut(e) {
+//     leftMenu.classList.remove('left-menu-on');
+//     leftMenu.classList.add('left-menu');
+// };
 
 //--- закрытие окна ---
 closeWindow.onclick = closingWindow;
